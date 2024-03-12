@@ -57,7 +57,7 @@ void CALLBACK display()
     glClear(GL_COLOR_BUFFER_BIT);      
     glLoadIdentity(); 
     glTranslatef(x, y, 0);
-    glBegin(GL_POINTS);
+    glBegin(GL_LINE_LOOP);
     {
         glColor3f(1.0, 0, 0);
         double r = 60;
