@@ -60,7 +60,7 @@ void CALLBACK display()
     glBegin(GL_POINTS);
     {
         glColor3f(1.0, 0, 0);
-        double r = 50;
+        double r = 60;
         for (int i = 0; i < 360; i++)
             glVertex2d(r*cos(i * PI / 180), r * sin(i * PI / 180));
     }
