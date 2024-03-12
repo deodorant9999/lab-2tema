@@ -6,10 +6,17 @@ Programul afiseaza un patrat pe care il translateaza pe axa x la apasarea sageti
 #include "gl.h"
 #include "glu.h"
 #include "glaux.h"
-
+#include <math.h>
+#define PI 3.14159265
 static GLfloat x = 0;
 static GLfloat y = 0;
-static GLfloat z = 0;
+
+static GLfloat alfa = 0;
+struct Vector
+{
+    GLfloat x;
+    GLfloat y;
+}orig;
 
 void myInit() {
     glClearColor(1.0, 1.0, 1.0, 1.0);
@@ -35,37 +42,29 @@ void CALLBACK MutaJos()
     y = y - 10;
 }
 
-void CALLBACK rot_z_up(AUX_EVENTREC * event)
+void CALLBACK RotLeft(AUX_EVENTREC * event)
 {   
-    glRotatef(45.0, 0, 0, 1);
+    alfa += 15.0;
 }
 
-void CALLBACK rot_z_down(AUX_EVENTREC * event)
+void CALLBACK RotRight(AUX_EVENTREC * event)
 {
-    glRotatef(-45.0, 0, 0, 1);
+    alfa -= 15.0;
 }
 
 void CALLBACK display()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    glLoadIdentity();
-
-    glTranslatef(x, y, z);
-
-    glBegin(GL_QUADS);
+    glClear(GL_COLOR_BUFFER_BIT);      
+    glLoadIdentity(); 
+    glTranslatef(x, y, 0);
+    glBegin(GL_POINTS);
     {
-        glColor3f(1.0, 0.0, 0.0);
-        glVertex2f(100.0, 100.0);
-        glColor3f(1.0, 1.0, 0.0);
-        glVertex2f(150.0, 100.0);
-        glColor3f(0.0, 0.0, 1.0);
-        glVertex2f(150.0, 150.0);
-        glColor3f(0.0, 1.0, 0.0);
-        glVertex2f(100.0, 150.0);
+        glColor3f(1.0, 0, 0);
+        double r = 50;
+        for (int i = 0; i < 360; i++)
+            glVertex2d(r*cos(i * PI / 180), r * sin(i * PI / 180));
     }
     glEnd();
-
     glFlush();
 }
 
@@ -109,9 +108,9 @@ int main(int argc, char** argv)
     auxKeyFunc(AUX_RIGHT, MutaDreapta);
     auxKeyFunc(AUX_UP, MutaSus);
     auxKeyFunc(AUX_DOWN, MutaJos);
-    auxMouseFunc(AUX_LEFTBUTTON, AUX_MOUSEDOWN, rot_z_up);
-    auxMouseFunc(AUX_RIGHTBUTTON, AUX_MOUSEDOWN, rot_z_down);
-
+    auxMouseFunc(AUX_LEFTBUTTON, AUX_MOUSEDOWN, RotLeft);
+    auxMouseFunc(AUX_RIGHTBUTTON, AUX_MOUSEDOWN, RotRight);
+    
     auxReshapeFunc(myReshape);
     auxMainLoop(display);
     return(0);
