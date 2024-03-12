@@ -57,12 +57,15 @@ void CALLBACK display()
     glClear(GL_COLOR_BUFFER_BIT);      
     glLoadIdentity(); 
     glTranslatef(x, y, 0);
-    glBegin(GL_POLYGON);
+    glBegin(GL_QUAD_STRIP);
     {
         glColor3f(1.0, 0, 0);
         double r = 60;
         for (int i = 0; i < 360; i++)
-            glVertex2d(r*cos(i * PI / 180), r * sin(i * PI / 180));
+        {
+            glVertex3d(r * cos(i * PI / 180), 100, r * sin(i * PI / 180));
+            glVertex3d(r * cos(i * PI / 180), -100, r * sin(i * PI / 180));
+        }
     }
     glEnd();
     glFlush();
@@ -79,10 +82,10 @@ void CALLBACK myReshape(GLsizei w, GLsizei h)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     if (w <= h) {
-        glOrtho(-160.0, 160.0, 160.0 * (GLfloat)h / (GLfloat)w, -160.0 * (GLfloat)h / (GLfloat)w, -10.0, 10.0);
+        glOrtho(-160.0, 160.0, 160.0 * (GLfloat)h / (GLfloat)w, -160.0 * (GLfloat)h / (GLfloat)w, -160.0, 160.0);
     }
     else {
-        glOrtho(-160.0 * (GLfloat)w / (GLfloat)h, 160.0 * (GLfloat)w / (GLfloat)h, -160.0, 160.0, -10.0, 10.0);
+        glOrtho(-160.0 * (GLfloat)w / (GLfloat)h, 160.0 * (GLfloat)w / (GLfloat)h, -160.0, 160.0, -160.0, 160.0);
     }
     glMatrixMode(GL_MODELVIEW);
 }
