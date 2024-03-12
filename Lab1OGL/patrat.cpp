@@ -57,14 +57,14 @@ void CALLBACK display()
     glClear(GL_COLOR_BUFFER_BIT);      
     glLoadIdentity(); 
     glTranslatef(x, y, 0);
-    glBegin(GL_QUAD_STRIP);
+    glBegin(GL_TRIANGLE_FAN);
     {
         glColor3f(1.0, 0, 0);
+        glVertex3d(40, 0, 40);
         double r = 60;
         for (int i = 0; i < 360; i++)
         {
-            glVertex3d(r * cos(i * PI / 180), 100, r * sin(i * PI / 180));
-            glVertex3d(r * cos(i * PI / 180), -100, r * sin(i * PI / 180));
+            glVertex3d(40+r * cos(i * PI / 180), -50, 40+r * sin(i * PI / 180));           
         }
     }
     glEnd();
